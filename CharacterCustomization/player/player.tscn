@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://character/eyes.png" type="Texture" id=1]
+[ext_resource path="res://character/hair2.png" type="Texture" id=2]
+[ext_resource path="res://character/legs2.png" type="Texture" id=3]
+[ext_resource path="res://character/chest2.png" type="Texture" id=4]
+[ext_resource path="res://character/body.png" type="Texture" id=5]
+[ext_resource path="res://player/player.gd" type="Script" id=6]
+
+[sub_resource type="Animation" id=1]
+resource_name = "idling"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "walking"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 3.46244
+height = 3.41821
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+script = ExtResource( 6 )
+
+[node name="Body" type="Sprite" parent="."]
+self_modulate = Color( 1, 0.713726, 0.478431, 1 )
+texture = ExtResource( 5 )
+hframes = 8
+
+[node name="Legs" type="Sprite" parent="."]
+self_modulate = Color( 0.760784, 0.776471, 0.772549, 1 )
+texture = ExtResource( 3 )
+hframes = 8
+
+[node name="Chest" type="Sprite" parent="."]
+self_modulate = Color( 0.760784, 0.776471, 0.772549, 1 )
+texture = ExtResource( 4 )
+hframes = 8
+
+[node name="Eyes" type="Sprite" parent="."]
+self_modulate = Color( 0.133333, 0.52549, 0.737255, 1 )
+texture = ExtResource( 1 )
+hframes = 8
+
+[node name="Hair" type="Sprite" parent="."]
+self_modulate = Color( 0.345098, 0.309804, 0.278431, 1 )
+texture = ExtResource( 2 )
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idling = SubResource( 1 )
+anims/walking = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0.924606, 12.4405 )
+rotation = 1.5708
+shape = SubResource( 3 )
+
+[connection signal="frame_changed" from="Body" to="." method="_on_Body_frame_changed"]
